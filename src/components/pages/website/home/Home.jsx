@@ -1,12 +1,12 @@
 import React from "react";
-import Header from "../../partials/Header";
 import Banner from "./banner/Banner";
 import Services from "./services/Services";
 import About from "./about/About";
 import Testimonials from "./testimonials/Testimonials";
-import Contact from "../../partials/Contact";
-import Footer from "../../partials/Footer";
 
+import Header from "../../../partials/Header";
+import Contact from "../../../partials/Contact";
+import Footer from "../../../partials/Footer";
 
 const Home = () => {
   return (
@@ -14,8 +14,8 @@ const Home = () => {
       <Header />
       <Banner />
       <Services />
-      <About/>
-      <Testimonials/>
+      <About />
+      <Testimonials />
       <Contact/>
       <Footer/>
     </>
