@@ -1,18 +1,25 @@
 <?php
-
-// SET HTTP HEADER
+//set http header
 require '../../../core/header.php';
-// USE NEEDED FUNCTIONS
+//use needed functions
 require '../../../core/functions.php';
-// USE MODELS
+//use models
 require '../../../models/developer/web-services/WebServices.php';
-// GET PAYLOAD
+//get payload
 $body = file_get_contents("php://input");
-$data = json_decode($body);
+$data = json_decode($body, true);
 
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+
+    //GET = READ
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $result = require 'read.php';
+        sendResponse($result);
+        exit;
+    }
+    //POST = CREATE
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $result = require 'create.php';
         sendResponse($result);
         exit;
     }

@@ -1,8 +1,8 @@
-import { devApiUrl, devKey } from "../helpers/function-general";
+import { devKey, devApiUrl } from "../helpers/function-general";
 
 export const queryData = (
-  endpoint, //url of pphp
-  method = "get", // if null, automatic set as get
+  endpoint, //url of php
+  method = "get", // if null automatic set as get
   fd = {} //payload
 ) => {
   let url = `${devApiUrl}${endpoint}`;
