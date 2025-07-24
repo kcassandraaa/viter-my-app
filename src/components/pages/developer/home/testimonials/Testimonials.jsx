@@ -1,18 +1,44 @@
 import React from "react";
 
-import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi";
+import {
+  HiOutlineChevronLeft,
+  HiOutlineChevronRight,
+  HiPencil,
+} from "react-icons/hi";
 import CardTestimonial from "../../../../partials/CardTestimonial";
+import { FaPlus } from "react-icons/fa";
+import ModalAddTestimonials from "./ModalAddTestimonials";
 
 const Testimonials = () => {
   const [currentSlide, setCurrentSlide] = React.useState(0);
 
+  const [
+    isModalTestimonials, //getter = get data
+    setIsModalTestimonials, //setter = set data
+  ] = React.useState(false);
+
+  const handleAdd = () => {
+    setIsModalTestimonials(true);
+  };
+
   return (
     <>
       <section id="testimonials" className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
+        <div className="relative container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">
             Client Testimonials
           </h2>
+          <div
+            className="absolute right-0 top-9 hover:underline hover:text-primary"
+            type="button"
+          >
+            <div className="flex items-center gap-x-3">
+              <button className="flex items-center gap-2" onClick={handleAdd}>
+                <FaPlus className="size-3" />
+                Add
+              </button>
+            </div>
+          </div>
 
           {/* Testimonial Slider */}
           <div className="relative max-w-4xl mx-auto">
@@ -91,6 +117,10 @@ const Testimonials = () => {
           </div>
         </div>
       </section>
+
+      {isModalTestimonials && (
+        <ModalAddTestimonials setIsModal={setIsModalTestimonials} />
+      )}
     </>
   );
 };

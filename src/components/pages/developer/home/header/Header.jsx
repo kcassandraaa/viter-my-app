@@ -4,22 +4,15 @@ import useQueryData from "../../../../custom-hooks/useQueryData";
 import ModalAddHeader from "./ModalAddHeader";
 import { FaEdit, FaPlus } from "react-icons/fa";
 import { apiVersion } from "../../../../helpers/function-general";
+import { HiPencil } from "react-icons/hi";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const [isModalHeader, setIsModalHeader] = React.useState(false);
-
-  const {
-    isLoading,
-    isFetching,
-    error,
-    data: dataServices,
-  } = useQueryData(
-    `${apiVersion}/controllers/developer/web-services/web-services.php`,
-    "get",
-    "web-services"
-  );
+  const [
+    isModalHeader, //getter = get data
+    setIsModalHeader, //setter = set data
+  ] = React.useState(false);
 
   const handleAdd = () => {
     setIsModalHeader(true);
@@ -36,7 +29,7 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-6">
+          <nav className="hidden md:flex space-x-6 items-center">
             <a href="#" className="hover:text-primary">
               Home
             </a>
@@ -49,6 +42,12 @@ const Header = () => {
             <a href="#contact" className="hover:text-primary">
               Contact
             </a>
+
+            <button className="tooltip" data-tooltip="Add" type="button" 
+            //onClick={() => handleAdd(data,values)} // other syntax
+            onClick={handleAdd}>
+              <HiPencil className="bg-primary  text-white size-6 p-1 border transition-all ease-in-out duration-200 rounded-full" />
+            </button>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -86,18 +85,6 @@ const Header = () => {
               </svg>
             )}
           </button>
-
-          <div className="absolute right-0 top-1/5">
-            <div className="flex items-center gap-x-3">
-              <button
-                className="flex items-center gap-2 hover:underline bg-primary text-white rounded-full p-1 hover:bg-blue-600"
-                type="button"
-                onClick={handleAdd}
-              >
-                <FaEdit className="size-3" />
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* Mobile Menu (now positioned absolutely) */}
@@ -135,9 +122,7 @@ const Header = () => {
         )}
       </header>
 
-      {isModalHeader && (
-        <ModalAddHeader setIsModal={setIsModalHeader}></ModalAddHeader>
-      )}
+      {isModalHeader && <ModalAddHeader setIsModal={setIsModalHeader} />}
     </>
   );
 };

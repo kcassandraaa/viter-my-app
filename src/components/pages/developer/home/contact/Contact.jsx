@@ -114,17 +114,17 @@ const Contact = () => {
               </ul>
             </div>
 
-            <form className="bg-gray-50 rounded-xl p-8 h-fit md:w-1/2">
-              <div>
+            <form className="contact bg-gray-50 rounded-xl p-8 h-fit md:w-1/2">
+              <div className="relative">
                 <label>Full Name</label>
                 <input type="text" />
               </div>
-              <div>
+              <div className="relative">
                 <label>Email Address</label>
                 <input type="text" />
               </div>
-              <div>
-                <label>Message</label>
+              <div className="relative">
+                <label className="top-1">Message</label>
                 <textarea rows="4"></textarea>
               </div>
               <button className="btn btn--blue">Send Message</button>
