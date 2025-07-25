@@ -14,7 +14,26 @@ const Header = () => {
     setIsModalHeader, //setter = set data
   ] = React.useState(false);
 
+  const [itemEdit, setItemEdit] = React.useState();
+
+  const {
+    isLoading,
+    isFetching,
+    error,
+    data: dataHeader,
+  } = useQueryData(
+    `${apiVersion}/controllers/developer/header/header.php`,
+    "get",
+    "header" // query key
+  );
+
   const handleAdd = () => {
+    setItemEdit(null);
+    setIsModalHeader(true);
+  };
+
+  const handleEdit = (item) => {
+    setItemEdit(item);
     setIsModalHeader(true);
   };
 
@@ -30,22 +49,28 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-6 items-center">
-            <a href="#" className="hover:text-primary">
-              Home
-            </a>
-            <a href="#about" className="hover:text-primary">
-              About
-            </a>
-            <a href="#services" className="hover:text-primary">
-              Services
-            </a>
-            <a href="#contact" className="hover:text-primary">
-              Contact
-            </a>
+            {dataHeader?.data.map((item, key) => {
+              return (
+                <div key={key}>
+                  <button
+                    type="button"
+                    data-tooltip="Edit"
+                    className="tooltip hover:text-primary"
+                    onClick={() => handleEdit(item)}
+                  >
+                    {item.header_name}
+                  </button>
+                </div>
+              );
+            })}
 
-            <button className="tooltip" data-tooltip="Add" type="button" 
-            //onClick={() => handleAdd(data,values)} // other syntax
-            onClick={handleAdd}>
+            <button
+              className="tooltip"
+              data-tooltip="Add"
+              type="button"
+              //onClick={() => handleAdd(data,values)} // other syntax
+              onClick={handleAdd}
+            >
               <HiPencil className="bg-primary  text-white size-6 p-1 border transition-all ease-in-out duration-200 rounded-full" />
             </button>
           </nav>
@@ -90,11 +115,7 @@ const Header = () => {
         {/* Mobile Menu (now positioned absolutely) */}
         {isMenuOpen && (
           <div className="md:hidden bg-white absolute top-full left-0 right-0 shadow-lg px-4 py-2 space-y-2 border-t border-gray-200">
-            <a
-              onClick={() => setIsMenuOpen(false)}
-              href="#"
-              className="block py-2 hover:text-primary"
-            >
+            <a href="#" className="block py-2 hover:text-primary">
               Home
             </a>
             <a
@@ -122,7 +143,9 @@ const Header = () => {
         )}
       </header>
 
-      {isModalHeader && <ModalAddHeader setIsModal={setIsModalHeader} />}
+      {isModalHeader && (
+        <ModalAddHeader setIsModal={setIsModalHeader} itemEdit={itemEdit} />
+      )}
     </>
   );
 };

@@ -2,6 +2,7 @@
 
 //check database
 $conn = null;
+//connect to database and store in conn variable
 $conn = checkDatabaseConnection();
 //use models 
 $webServices = new WebServices($conn);

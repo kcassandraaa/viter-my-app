@@ -23,4 +23,15 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         sendResponse($result);
         exit;
     }
+
+    // UPDATE STEP 14
+    //PUT = UPDATE
+    if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+        // returnError('update');
+        // UPDATE STEP 16 -> update.php
+        $result = require 'update.php';
+        sendResponse($result);
+        exit;
+    }
+    // UPDATE STEP 15 - downlaod CORS from chrome web store then toggle on
 }

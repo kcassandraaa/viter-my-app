@@ -20,10 +20,14 @@ const ModalAddTestimonials = ({ setIsModal }) => {
         values
       ),
     onSuccess: (data) => {
-      if (data.success) {
-        alert("Successfully Created.");
+      //validate reading
+      queryClient.invalidateQueries(""); // give id for refetching data.
+
+      if (!data.success) {
+        window.prompt(data.error);
       } else {
-        alert(data.error);
+        window.prompt(`Successfully created.`);
+        setIsModal(false);
       }
     },
   });
@@ -82,6 +86,13 @@ const ModalAddTestimonials = ({ setIsModal }) => {
                   <div className="modal-overflow">
                     <div className="relative mt-5 mb-6">
                       <InputText
+                        label="Image"
+                        name="testimonials_image"
+                        type="text"
+                      />
+                    </div>
+                    <div className="relative mt-5 mb-6">
+                      <InputText
                         label="Name"
                         name="testimonials_name"
                         type="text"
@@ -98,13 +109,6 @@ const ModalAddTestimonials = ({ setIsModal }) => {
                       <InputText
                         label="Comment"
                         name="testimonials_comment"
-                        type="text"
-                      />
-                    </div>
-                    <div className="relative mt-5 mb-6">
-                      <InputText
-                        label="Image"
-                        name="testimonials_image"
                         type="text"
                       />
                     </div>

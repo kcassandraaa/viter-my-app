@@ -8,20 +8,28 @@ import { Form, Formik } from "formik";
 import { InputText, InputTextArea } from "../../../../helpers/FormInputs";
 import * as Yup from "yup";
 
-const ModalAddServices = ({ setIsModal }) => {
+//UPDATE STEP 8 - pass the itemEdit
+const ModalAddServices = ({ setIsModal, itemEdit }) => {
   const [animate, setAnimate] = React.useState("translate-x-full");
+  // console.log(itemEdit); to show the info of itemEdit in console
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (values) =>
       queryData(
-        `${apiVersion}/controllers/developer/web-services/web-services.php`,
-        "post", //CREATE
+        //UPDATE STEP 12 - update existing service or add new one
+        itemEdit
+          ? `${apiVersion}/controllers/developer/web-services/web-services.php?id=${itemEdit.web_services_aid}` //to pass id
+          : `${apiVersion}/controllers/developer/web-services/web-services.php`,
+        //UPDATE STEP 13 - add condition for update -> web-services.php
+        itemEdit
+          ? "put" // UPDATE
+          : "post", //CREATE
         values
       ),
     onSuccess: (data) => {
       //validate reading
-      queryClient.invalidateQueries(""); // give id for refetching data.
+      queryClient.invalidateQueries({ queryKey: ["web-services"] }); // give id for refetching data and refreshing
 
       if (!data.success) {
         window.prompt(data.error);
@@ -41,11 +49,12 @@ const ModalAddServices = ({ setIsModal }) => {
   };
 
   const initVal = {
-    web_services_name: "",
-    web_services_description: "",
-    web_services_image: "",
-    web_services_link: "",
-    web_services_text_url: "",
+    // UPDATE STEP 9 - add conditions to show the info from the database to the inputs of the modal
+    web_services_name: itemEdit ? itemEdit.web_services_name : "",
+    web_services_description: itemEdit ? itemEdit.web_services_description : "",
+    web_services_image: itemEdit ? itemEdit.web_services_image : "",
+    web_services_link: itemEdit ? itemEdit.web_services_link : "",
+    web_services_text_url: itemEdit ? itemEdit.web_services_text_url : "",
   };
 
   const yupSchema = Yup.object({
@@ -60,7 +69,8 @@ const ModalAddServices = ({ setIsModal }) => {
   return (
     <ModalWrapper className={`${animate}`} handleClose={handleClose}>
       <div className="modal_header relative mb-4">
-        <h3 className="text-sm">Add Services</h3>
+        {/* UPDATE STEP 10 - if the edit button is clicked, the h3 must also be edit*/}
+        <h3 className="text-sm"> {itemEdit ? "Edit" : "Add"} Services</h3>
         <button
           className="absolute  top-0.5 right-0"
           type="button"
@@ -129,7 +139,12 @@ const ModalAddServices = ({ setIsModal }) => {
                     disabled={mutation.isPending}
                     className="btn-modal-submit"
                   >
-                    {mutation.isPending ? "Loading..." : "Add"}
+                    {/* UPDATE STEP 11 a - if the edit button is clicked, the button below must be save -> Services.jsx*/}
+                    {mutation.isPending
+                      ? "Loading..."
+                      : itemEdit
+                      ? "Save"
+                      : "Add"}
                   </button>
                   <button
                     type="reset"

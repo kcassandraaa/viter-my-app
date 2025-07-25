@@ -93,6 +93,15 @@ function checkCreate($models)
     checkQuery($query, "There's something wrong with models. (create)");
     return $query;
 }
+
+// UPDATE STEP 20 - create function checkUpdate -> WebServices.php(models)
+function checkUpdate($models)
+{
+    $query = $models->update();
+    checkQuery($query, "There's something wrong with models. (update)");
+    return $query;
+}
+
 function getResultData($query)
 {
     $data = $query->fetchAll();

@@ -4,9 +4,12 @@ import useQueryData from "../../../../custom-hooks/useQueryData";
 import { apiVersion } from "../../../../helpers/function-general";
 import { FaPlus } from "react-icons/fa";
 import ModalAddServices from "./ModalAddServices";
+import { FaPencil } from "react-icons/fa6";
 
 const Services = () => {
   const [isModalServices, setIsModalServices] = React.useState(false);
+  //UPDATE STEP 5
+  const [itemEdit, setItemEdit] = React.useState();
 
   const {
     isLoading,
@@ -16,12 +19,22 @@ const Services = () => {
   } = useQueryData(
     `${apiVersion}/controllers/developer/web-services/web-services.php`,
     "get",
-    "web-services"
+    "web-services" // query key
   );
 
   const handleAdd = () => {
+    setItemEdit(null); // UPDATE STEP 11 b - to empty the form after edit -> ModalAddServices
     setIsModalServices(true);
-  }
+  };
+
+  // UPDATE STEP 2
+  // UPDATE STEP 4 - call item
+  const handleEdit = (item) => {
+    // console.log(item); to show the info of the chosen item
+    // UPDATE STEP 6
+    setItemEdit(item);
+    setIsModalServices(true);
+  };
 
   return (
     <>
@@ -51,9 +64,22 @@ const Services = () => {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
             {dataServices?.data.map((item, key) => {
               return (
-                <React.Fragment key={key}>
+                <div key={key} className="relative">
+                  {/* UPDATE STEP 1 - create a button*/}
+                  <div className="absolute top-5 right-3">
+                    <button
+                      type="button"
+                      data-tooltip="Edit"
+                      className="tooltip text-white "
+                      //UPDATE STEP 3
+                      onClick={() => handleEdit(item)}
+                    >
+                      <FaPencil className="p-1 bg-primary rounded-full" />
+                    </button>
+                  </div>
+
                   <CardService item={item} />
-                </React.Fragment>
+                </div>
               );
             })}
 
@@ -92,7 +118,10 @@ const Services = () => {
         </div>
       </section>
 
-      {isModalServices && <ModalAddServices setIsModal={setIsModalServices} />}
+      {isModalServices && (
+        <ModalAddServices setIsModal={setIsModalServices} itemEdit={itemEdit} />
+      )}
+      {/* UPDATE STEP 7 - pass the item edit -> ModalAddServices.jsx */}
     </>
   );
 };
