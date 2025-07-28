@@ -72,4 +72,47 @@ class Testimonials
         }
         return $query;
     }
+
+    // UPDATE STEP 13
+    public function update()
+    {
+        try {
+            $sql = "update {$this->tblTestimonials} set ";
+            $sql .= "testimonials_name = :testimonials_name, ";
+            $sql .= "testimonials_position = :testimonials_position, ";
+            $sql .= "testimonials_comment = :testimonials_comment, ";
+            $sql .= "testimonials_image = :testimonials_image, ";
+            $sql .= "testimonials_updated = :testimonials_updated ";
+            $sql .= "where testimonials_aid = :testimonials_aid";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                'testimonials_name' => $this->testimonials_name,
+                'testimonials_position' => $this->testimonials_position,
+                'testimonials_comment' => $this->testimonials_comment,
+                'testimonials_image' => $this->testimonials_image,
+                'testimonials_updated' => $this->testimonials_updated,
+                'testimonials_aid' => $this->testimonials_aid
+            ]);
+        } catch (PDOException $ex) {
+            returnError($ex);
+            $query = false;
+        }
+        return $query;
+    }
+
+    // DELETE STEP 17 - create public function delete ->Testimonials.jsx
+    public function delete()
+    {
+        try {
+            $sql = "delete from {$this->tblTestimonials} ";
+            $sql .= "where testimonials_aid = :testimonials_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "testimonials_aid" => $this->testimonials_aid
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 }

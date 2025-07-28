@@ -2,12 +2,12 @@ import React from "react";
 import { FaTrash } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
 
-// TABLE STEP 7
-const ServicesTable = ({
+//TABLE STEP 7
+const TestimonialsTable = ({
   isLoading,
   isFetching,
   error,
-  dataServices,
+  dataTestimonials,
   handleAdd,
   handleEdit,
   handleDelete,
@@ -15,21 +15,24 @@ const ServicesTable = ({
   return (
     <>
       {/* TABLE STEP 8 */}
+      {/* TABLE STEP 8 */}
       <table>
         <thead>
           <th>#</th>
           <th>Name</th>
           <th>Description</th>
+          <th>Comment</th>
           <th>Action</th>
         </thead>
         <tbody>
           {/* TABLE STEP 10 */}
-          {dataServices?.data.map((item, index) => {
+          {dataTestimonials?.data.map((item, index) => {
             return (
               <tr>
                 <td>{index + 1}.</td>
-                <td>{item.web_services_name}</td>
-                <td>{item.web_services_description}</td>
+                <td>{item.testimonials_name}</td>
+                <td>{item.testimonials_position}</td>
+                <td>{item.testimonials_comment}</td>
                 <td>
                   {/* TABLE STEP 9 */}
                   <div className="flex items-center justify-end gap-x-3 mr-10">
@@ -63,4 +66,4 @@ const ServicesTable = ({
   );
 };
 
-export default ServicesTable;
+export default TestimonialsTable;

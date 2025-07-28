@@ -1,11 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
-import { queryData } from "../../../../custom-hooks/queryData";
-import { MdDelete } from "react-icons/md";
 import { GrFormClose } from "react-icons/gr";
+import { MdDelete } from "react-icons/md";
+import { queryData } from "../../../../custom-hooks/queryData";
 
 // DELETE STEP 4 - pass
-const ModalDeleteServices = ({ setModalDelete, mySqlEndpoint, queryKey }) => {
+const ModalDeleteTestimonials = ({
+  setModalDelete,
+  mySqlEndpoint,
+  queryKey,
+}) => {
   const handleClose = () => {
     setModalDelete(false);
   };
@@ -17,6 +21,7 @@ const ModalDeleteServices = ({ setModalDelete, mySqlEndpoint, queryKey }) => {
     // DELETE STEP 6
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: [queryKey] });
+
       if (!data.success) {
         alert(data.error);
       } else {
@@ -30,7 +35,6 @@ const ModalDeleteServices = ({ setModalDelete, mySqlEndpoint, queryKey }) => {
   const handleConfirm = () => {
     mutation.mutate();
   };
-
   return (
     <>
       {/* DELETE STEP 8 */}
@@ -51,10 +55,10 @@ const ModalDeleteServices = ({ setModalDelete, mySqlEndpoint, queryKey }) => {
               <GrFormClose className="text-[45px]" />
             </button>
           </div>
-          {/* DELETE STEP 10 - confirmation -> Services.jsx   */}
+          {/* DELETE STEP 10 - confirmation -> Testimonials.jsx   */}
           <div className="p-5 text-center">
             <h3 className="text-sm pb-2 text-black">
-              Are you sure you want to delete this service?
+              Are you sure you want to delete this testimonial?
             </h3>
             <div className="flex justify-center items-center mt-5 gap-2">
               <button
@@ -80,4 +84,4 @@ const ModalDeleteServices = ({ setModalDelete, mySqlEndpoint, queryKey }) => {
   );
 };
 
-export default ModalDeleteServices;
+export default ModalDeleteTestimonials;

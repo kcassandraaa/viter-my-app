@@ -148,7 +148,7 @@
     @apply border border-gray-300 hover:bg-gray-100;
   }
   .card {
-    @apply bg-white p-8 rounded-xl shadow-md hover:shadow-lg;
+    @apply bg-white p-8 rounded-xl w-full h-full shadow-md hover:shadow-lg;
   }
   .card img {
     @apply size-16 mb-6;

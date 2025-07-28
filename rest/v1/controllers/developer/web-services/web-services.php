@@ -35,7 +35,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     }
     // UPDATE STEP 15 - downlaod CORS from chrome web store then toggle on
 
-    //DELETE STEP 12
+    //DELETE STEP 12 -> delete.php
     if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
         //returnError('asd');
         $result = require 'delete.php';

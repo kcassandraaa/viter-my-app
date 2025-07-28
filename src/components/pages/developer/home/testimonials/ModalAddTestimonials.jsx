@@ -8,15 +8,21 @@ import * as Yup from "yup";
 import { InputText } from "../../../../helpers/FormInputs";
 import { queryData } from "../../../../custom-hooks/queryData";
 
-const ModalAddTestimonials = ({ setIsModal }) => {
+//UPDATE STEP 5b - pass the itemEdit
+const ModalAddTestimonials = ({ setIsModal, itemEdit }) => {
   const [animate, setAnimate] = React.useState("translate-x-full");
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (values) =>
+      // UPDATE STEP 9 - update existing testimonial or add new one -> testimonials.php
       queryData(
-        `${apiVersion}/controllers/developer/testimonials/testimonials.php`,
-        "post",
+        itemEdit
+          ? `${apiVersion}/controllers/developer/testimonials/testimonials.php?id=${itemEdit.testimonials_aid}` //to pass id
+          : `${apiVersion}/controllers/developer/testimonials/testimonials.php`,
+        itemEdit
+          ? "put" // UPDATE
+          : "post", //CREATE
         values
       ),
     onSuccess: (data) => {
@@ -33,15 +39,16 @@ const ModalAddTestimonials = ({ setIsModal }) => {
   });
 
   const initVal = {
-    testimonials_name: "",
-    testimonials_comment: "",
-    testimonials_position: "",
-    testimonials_image: "",
+    // UPDATE STEP 6 - add conditions to show the info from the database to the inputs of the modal
+    testimonials_name: itemEdit ? itemEdit.testimonials_name : "",
+    testimonials_position: itemEdit ? itemEdit.testimonials_position : "",
+    testimonials_comment: itemEdit ? itemEdit.testimonials_comment : "",
+    testimonials_image: itemEdit ? itemEdit.testimonials_image : "",
   };
   const yupSchema = Yup.object({
     testimonials_name: Yup.string().required("required"),
-    testimonials_comment: Yup.string().required("required"),
     testimonials_position: Yup.string().required("required"),
+    testimonials_comment: Yup.string().required("required"),
     testimonials_image: Yup.string().required("required"),
   });
 
@@ -61,7 +68,8 @@ const ModalAddTestimonials = ({ setIsModal }) => {
     <>
       <ModalWrapper className={animate} handleClose={handleClose}>
         <div className="modal_testimonials relative mb-4">
-          <h3 className="text-sm">Add Testimonials</h3>
+          {/* UPDATE STEP 7 - if the edit button is clicked, the h3 must also be edit */}
+          <h3 className="text-sm"> {itemEdit ? "Edit" : "Add"} Testimonials</h3>
           <button
             className="absolute  top-0.5 right-0"
             type="button"
@@ -120,7 +128,12 @@ const ModalAddTestimonials = ({ setIsModal }) => {
                       disabled={mutation.isPending}
                       className="btn-modal-submit"
                     >
-                      {mutation.isPending ? "Loading..." : "Add"}
+                      {/* UPDATE STEP 8 - if the edit button is clicked, the button below must be save -> Testimonials.jsx*/}
+                      {mutation.isPending
+                        ? "Loading..."
+                        : itemEdit
+                        ? "Save"
+                        : "Add"}
                     </button>
                     <button
                       type="reset"

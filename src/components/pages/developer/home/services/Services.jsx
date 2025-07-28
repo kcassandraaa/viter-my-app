@@ -2,7 +2,7 @@ import React from "react";
 import CardService from "../../../../partials/CardService";
 import useQueryData from "../../../../custom-hooks/useQueryData";
 import { apiVersion } from "../../../../helpers/function-general";
-import { FaPlus, FaTable, FaTrash } from "react-icons/fa";
+import { FaList, FaPlus, FaTable, FaTrash } from "react-icons/fa";
 import ModalAddServices from "./ModalAddServices";
 import { FaPencil } from "react-icons/fa6";
 import ModalDeleteServices from "./ModalDeleteServices";
@@ -76,8 +76,16 @@ const Services = () => {
                   type="button"
                   onClick={handleToggleTable}
                 >
-                  <FaTable className="size-3" />
-                  Table
+                  {isTable == true ? (
+                    <>
+                      <FaList className="size-3 " /> List
+                    </>
+                  ) : (
+                    <>
+                      <FaTable className="size-3" />
+                      Table
+                    </>
+                  )}
                 </button>
                 <button
                   className="flex items-center gap-2 hover:underline hover:text-primary"
@@ -121,7 +129,7 @@ const Services = () => {
       {isModalServices && (
         <ModalAddServices setIsModal={setIsModalServices} itemEdit={itemEdit} />
       )}
-      {/* UPDATE STEP 7 - pass the item edit -> ModalAddServices.jsx */}
+      {/* UPDATE STEP 7 - pass the itemEdit above -> ModalAddServices.jsx */}
 
       {/* DELETE STEP 11 -> web-services.php */}
       {isDeleteServices && (

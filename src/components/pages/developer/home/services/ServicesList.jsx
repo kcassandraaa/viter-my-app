@@ -3,6 +3,7 @@ import { FaTrash } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
 import CardService from "../../../../partials/CardService";
 
+//TABLE STEP 4
 const ServicesList = ({
   isLoading,
   isFetching,
