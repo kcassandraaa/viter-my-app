@@ -17,7 +17,7 @@ const ModalAddHeader = ({ setIsModal, itemEdit }) => {
       queryData(
         itemEdit
           ? `${apiVersion}/controllers/developer/header/header.php?id=${itemEdit.header_aid}` //to pass id
-          : `${apiVersion}/controllers/developer/header/header.php`,
+          : `${apiVersion}/controllers/developer/header/header.php`, 
         itemEdit
           ? "put" // UPDATE
           : "post", //CREATE
@@ -27,9 +27,9 @@ const ModalAddHeader = ({ setIsModal, itemEdit }) => {
       queryClient.invalidateQueries({ queryKey: ["header"] });
 
       if (!data.success) {
-        window.prompt(data.error);
+        alert(data.error);
       } else {
-        window.prompt(`Successfully created.`);
+        alert(`Successfully created.`);
         setIsModal(false);
       }
     },

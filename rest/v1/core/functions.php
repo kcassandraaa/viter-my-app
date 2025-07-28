@@ -121,6 +121,30 @@ function getQueriedData($query)
     exit;
 }
 
+// DELETE STEP 15 - create function checkId
+function checkId($id)
+{
+    $response = new Response();
+    if ($id == '' || !is_numeric($id)) {
+        $response->setSuccess(false);
+        $error = [];
+        $error['code'] = '400';
+        $error['error'] = 'ID cannot be blank or must be numeric';
+        $error['success'] = false;
+        $response->setData($error);
+        $response->send();
+        exit;
+    }
+}
+
+// DELETE STEP 16 -> WebServices.php
+function checkDelete($models)
+{
+    $query = $models->delete();
+    checkQuery($query, "There's something wrong with models. (delete)");
+    return $query;
+}
+
 function checkQuery($query, $msg)
 {
     //IF QUERY IS FALSE THEN DO THIS CODE

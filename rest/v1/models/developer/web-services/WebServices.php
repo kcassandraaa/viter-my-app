@@ -46,7 +46,7 @@ class WebServices
             $sql .= 'web_services_description, ';
             $sql .= 'web_services_image, ';
             $sql .= 'web_services_link, ';
-            $sql .= 'web_services_url, ';
+            $sql .= 'web_services_text_url, ';
             $sql .= 'web_services_created, ';
             $sql .= 'web_services_updated ) values ( ';
             $sql .= ':web_services_is_active, ';
@@ -97,6 +97,22 @@ class WebServices
                 "web_services_text_url" => $this->web_services_text_url,
                 "web_services_updated" => $this->web_services_updated,
                 "web_services_aid" => $this->web_services_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // DELETE STEP 17 - create public function delete ->Services.jsx
+    public function delete()
+    {
+        try {
+            $sql = "delete from {$this->tblWebServices} ";
+            $sql .= "where web_services_aid = :web_services_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "web_services_aid" => $this->web_services_aid
             ]);
         } catch (PDOException $ex) {
             $query = false;
