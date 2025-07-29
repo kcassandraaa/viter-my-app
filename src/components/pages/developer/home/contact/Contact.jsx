@@ -8,7 +8,6 @@ import { apiVersion } from "../../../../helpers/function-general";
 import { InputText, InputTextArea } from "../../../../helpers/FormInputs";
 import useQueryData from "../../../../custom-hooks/useQueryData";
 import { FaList, FaTable } from "react-icons/fa";
-import ContactTable from "./ContactTable";
 
 const Contact = () => {
   const [isTable, setIsTable] = React.useState(false);
@@ -200,29 +199,7 @@ const Contact = () => {
                         </>
                       )}
                     </button>
-                    {isTable == true ? (
-                      <>
-                        <ContactTable
-                          isLoading={isLoading}
-                          isFetching={isFetching}
-                          error={error}
-                          dataContact={dataContact}
-                          handleAdd={handleAdd}
-                          handleEdit={handleEdit}
-                          handleDelete={handleDelete}
-                        />
-                      </>
-                    ) : (
-                      <ContactList
-                        isLoading={isLoading}
-                        isFetching={isFetching}
-                        error={error}
-                        dataContact={dataContact}
-                        handleAdd={handleAdd}
-                        handleEdit={handleEdit}
-                        handleDelete={handleDelete}
-                      />
-                    )}
+
                     <div className="relative">
                       <InputText
                         label="Full Name"
@@ -243,6 +220,7 @@ const Contact = () => {
                         as="textarea"
                         rows="4"
                         name="contact_message"
+                        className="inline-block"
                       />
                     </div>
                     {/* CREATE STEP 2 */}
