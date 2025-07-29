@@ -64,4 +64,42 @@ class Contact
         }
         return $query;
     }
+
+    public function update()
+    {
+        try {
+            $sql = "update {$this->tblContact} set ";
+            $sql .= "contact_fullname = :contact_fullname, ";
+            $sql .= "contact_email = :contact_email, ";
+            $sql .= "contact_message = :contact_message, ";
+            $sql .= "contact_updated = :contact_updated ";
+            $sql .= "where contact_aid = :contact_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "contact_fullname" => $this->contact_fullname,
+                "contact_email" => $this->contact_email,
+                "contact_message" => $this->contact_message,
+                "contact_updated" => $this->contact_updated,
+                "contact_aid" => $this->contact_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function delete()
+    {
+        try {
+            $sql = "delete from {$this->tblContact} ";
+            $sql .= "where contact_aid = :contact_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "contact_aid" => $this->contact_aid
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 }
