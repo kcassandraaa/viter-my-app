@@ -162,6 +162,9 @@
   .card a {
     @apply text-primary font-medium hover:text-blue-700;
   }
+  .testimonials {
+    @apply p-10;
+  }
   .testimonialsItem {
     @apply bg-white py-10 px-12 rounded-xl shadow-md text-center mb-4;
   }

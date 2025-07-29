@@ -14,6 +14,30 @@ const TestimonialsList = ({
   handleDelete,
 }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0);
+
+  const prevTestimonialCountRef = React.useRef(0);
+  const hasInitializedRef = React.useRef(false);
+
+  React.useEffect(() => {
+    const testimonials = dataTestimonials?.data ?? [];
+    const testimonialCount = testimonials.length;
+    const prevCount = prevTestimonialCountRef.current;
+
+    // First time we get non-empty data (on load or refresh)
+    if (!hasInitializedRef.current && testimonialCount > 0) {
+      setCurrentSlide(0); // Always go to first slide on initial load
+      hasInitializedRef.current = true;
+    } else if (testimonialCount > prevCount) {
+      setCurrentSlide(testimonialCount - 1); // New testimonial added
+    } else if (testimonialCount < prevCount) {
+      setCurrentSlide((prev) => Math.max(prev - 1, 0)); // Testimonial removed
+    } else if (testimonialCount === 0) {
+      setCurrentSlide(0); // No testimonials
+    }
+
+    prevTestimonialCountRef.current = testimonialCount;
+  }, [dataTestimonials?.data]);
+
   return (
     <>
       {/* TABLE STEP 5 */}
@@ -27,32 +51,34 @@ const TestimonialsList = ({
           >
             {dataTestimonials?.data.map((item, key) => {
               return (
-                <React.Fragment key={key}>
-                  {/* UPDATE STEP 1 */}
-                  <div className="relative">
-                    <div className="absolute flex left-[50.5rem] top-6">
-                      <button
-                        type="button"
-                        data-tooltip="Edit"
-                        className="tooltip text-white "
-                        // UPDATE STEP 3
-                        onClick={() => handleEdit(item)}
-                      >
-                        <FaPencil className="p-1 bg-primary rounded-full" />
-                      </button>
-                      {/* DELETE STEP 3 -> ModalDeleteTestimonials.jsx */}
-                      <button
-                        type="button"
-                        data-tooltip="Delete"
-                        className="tooltip text-red-600 "
-                        onClick={() => handleDelete(item)}
-                      >
-                        <FaTrash className="p-1 bg-primary rounded-full" />
-                      </button>
+               
+                  <React.Fragment key={key}>
+                    {/* UPDATE STEP 1 */}
+                    <div key={key} className="relative">
+                      <div className="absolute flex left-[52rem] top-7">
+                        <button
+                          type="button"
+                          data-tooltip="Edit"
+                          className="tooltip text-white "
+                          // UPDATE STEP 3
+                          onClick={() => handleEdit(item)}
+                        >
+                          <FaPencil className="p-1 bg-primary rounded-full" />
+                        </button>
+                        {/* DELETE STEP 3 -> ModalDeleteTestimonials.jsx */}
+                        <button
+                          type="button"
+                          data-tooltip="Delete"
+                          className="tooltip text-red-600 "
+                          onClick={() => handleDelete(item)}
+                        >
+                          <FaTrash className="p-1 bg-primary rounded-full" />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                  <CardTestimonial item={item} />
-                </React.Fragment>
+                    <CardTestimonial item={item} />
+                  </React.Fragment>
+            
               );
             })}
 

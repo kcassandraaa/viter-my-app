@@ -8,7 +8,7 @@ import { HiPencil } from "react-icons/hi";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  //CREATE STEP 1
   const [
     isModalHeader, //getter = get data
     setIsModalHeader, //setter = set data
@@ -27,6 +27,7 @@ const Header = () => {
     "header" // query key
   );
 
+  //CREATE STEP 4
   const handleAdd = () => {
     setItemEdit(null);
     setIsModalHeader(true);
@@ -63,7 +64,7 @@ const Header = () => {
                 </div>
               );
             })}
-
+            {/* CREATE STEP 2 */}
             <button
               className="tooltip"
               data-tooltip="Add"
@@ -143,6 +144,7 @@ const Header = () => {
         )}
       </header>
 
+      {/* CREATE STEP 3 -> ModalAddHeader.jsx */}
       {isModalHeader && (
         <ModalAddHeader setIsModal={setIsModalHeader} itemEdit={itemEdit} />
       )}

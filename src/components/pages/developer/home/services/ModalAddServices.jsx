@@ -92,6 +92,14 @@ const ModalAddServices = ({ setIsModal, itemEdit }) => {
             return (
               <Form>
                 <div className="modal-overflow">
+                  <div className="relative mt-3 mb-5">
+                    <InputText
+                      label="Image url"
+                      name="web_services_image"
+                      type="text"
+                      disabled={mutation.isPending}
+                    />
+                  </div>
                   <div className="relative mt-3">
                     <InputText
                       label="Name"
@@ -104,14 +112,6 @@ const ModalAddServices = ({ setIsModal, itemEdit }) => {
                     <InputTextArea
                       label="Description"
                       name="web_services_description"
-                      type="text"
-                      disabled={mutation.isPending}
-                    />
-                  </div>
-                  <div className="relative mt-3 mb-5">
-                    <InputText
-                      label="Image url"
-                      name="web_services_image"
                       type="text"
                       disabled={mutation.isPending}
                     />

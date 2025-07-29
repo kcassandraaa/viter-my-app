@@ -46,7 +46,7 @@ const ModalDeleteServices = ({ setModalDelete, mySqlEndpoint, queryKey }) => {
             <button
               type="button"
               onClick={handleClose}
-              className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-6 h-8 absolute top-1 right-6"
+              className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm absolute top-1 right-1"
             >
               <GrFormClose className="text-[45px]" />
             </button>

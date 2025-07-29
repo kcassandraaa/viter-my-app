@@ -27,6 +27,7 @@ const Testimonials = () => {
   };
 
   const handleAdd = () => {
+    setItemEdit(null); // to empty the form after edit
     setIsModalTestimonials(true);
   };
 

@@ -1,6 +1,64 @@
 import React from "react";
+import ModalAddContact from "./ModalAddContact";
+import { Form, Formik } from "formik";
+import * as Yup from "yup";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { queryData } from "../../../../custom-hooks/queryData";
+import { apiVersion } from "../../../../helpers/function-general";
+import { InputText, InputTextArea } from "../../../../helpers/FormInputs";
+import useQueryData from "../../../../custom-hooks/useQueryData";
+import { FaList, FaTable } from "react-icons/fa";
+import ContactTable from "./ContactTable";
 
 const Contact = () => {
+  const [isTable, setIsTable] = React.useState(false);
+
+  const {
+    isLoading,
+    isFetching,
+    error,
+    data: dataContact,
+  } = useQueryData(
+    `${apiVersion}/controllers/developer/contact/contact.php`,
+    "get",
+    "contact" // query key
+  );
+
+  console.log(isTable);
+  const handleToggleTable = () => {
+    setIsTable(!isTable);
+  };
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(
+        `${apiVersion}/controllers/developer/contact/contact.php`,
+        "post", // CREATE
+        values
+      ),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["contact"] });
+
+      if (!data.success) {
+        alert(data.error);
+      } else {
+        alert(`Successfully created.`);
+      }
+    },
+  });
+
+  const initVal = {
+    contact_fullname: "",
+    contact_email: "",
+    contact_message: "",
+  };
+  const yupSchema = Yup.object({
+    contact_fullname: Yup.string().required("required"),
+    contact_email: Yup.string().required("required"),
+    contact_message: Yup.string().required("required"),
+  });
+
   return (
     <>
       <section id="contact" className="bg-white py-12 md:py-20">
@@ -114,21 +172,87 @@ const Contact = () => {
               </ul>
             </div>
 
-            <form className="contact bg-gray-50 rounded-xl p-8 h-fit md:w-1/2">
-              <div className="relative">
-                <label>Full Name</label>
-                <input type="text" />
-              </div>
-              <div className="relative">
-                <label>Email Address</label>
-                <input type="text" />
-              </div>
-              <div className="relative">
-                <label className="top-1">Message</label>
-                <textarea rows="4"></textarea>
-              </div>
-              <button className="btn btn--blue">Send Message</button>
-            </form>
+            <Formik
+              initialValues={initVal}
+              validationSchema={yupSchema}
+              onSubmit={async (values, { resetForm }) => {
+                console.log;
+                await mutation.mutateAsync(values);
+                resetForm();
+              }}
+            >
+              {(props) => {
+                return (
+                  <Form className="contact bg-gray-50 rounded-xl p-8 h-fit md:w-1/2">
+                    <button
+                      className="flex items-center gap-2 justify-self-end hover:underline hover:text-primary"
+                      type="button"
+                      onClick={handleToggleTable}
+                    >
+                      {isTable == true ? (
+                        <>
+                          <FaList className="size-3 " /> List
+                        </>
+                      ) : (
+                        <>
+                          <FaTable className="size-3" />
+                          Table
+                        </>
+                      )}
+                    </button>
+                    {isTable == true ? (
+                      <>
+                        <ContactTable
+                          isLoading={isLoading}
+                          isFetching={isFetching}
+                          error={error}
+                          dataContact={dataContact}
+                          handleAdd={handleAdd}
+                          handleEdit={handleEdit}
+                          handleDelete={handleDelete}
+                        />
+                      </>
+                    ) : (
+                      <ContactList
+                        isLoading={isLoading}
+                        isFetching={isFetching}
+                        error={error}
+                        dataContact={dataContact}
+                        handleAdd={handleAdd}
+                        handleEdit={handleEdit}
+                        handleDelete={handleDelete}
+                      />
+                    )}
+                    <div className="relative">
+                      <InputText
+                        label="Full Name"
+                        type="text"
+                        name="contact_fullname"
+                      />
+                    </div>
+                    <div className="relative">
+                      <InputText
+                        label="Email Address"
+                        type="text"
+                        name="contact_email"
+                      />
+                    </div>
+                    <div className="relative">
+                      <InputTextArea
+                        label="Message"
+                        as="textarea"
+                        rows="4"
+                        name="contact_message"
+                      />
+                    </div>
+                    {/* CREATE STEP 2 */}
+                    <button className="btn btn--blue" type="submit">
+                      Send Message
+                    </button>
+                  </Form>
+                );
+              }}
+            </Formik>
           </div>
         </div>
       </section>

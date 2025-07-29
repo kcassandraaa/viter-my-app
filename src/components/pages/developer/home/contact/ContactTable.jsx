@@ -2,12 +2,11 @@ import React from "react";
 import { FaTrash } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
 
-// TABLE STEP 7
-const ServicesTable = ({
+const ContactTable = ({
   isLoading,
   isFetching,
   error,
-  dataServices,
+  dataContact,
   handleAdd,
   handleEdit,
   handleDelete,
@@ -18,46 +17,30 @@ const ServicesTable = ({
       <table>
         <thead>
           <th>#</th>
-          <th>Image</th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Action</th>
+          <th>Full Name</th>
         </thead>
         <tbody>
-          {/* TABLE STEP 10 */}
-          {dataServices?.data.map((item, index) => {
+          {dataContact?.data.map((item, index) => {
             return (
               <tr>
                 <td>{index + 1}.</td>
+                <td>{item.contact_fullname}</td>
                 <td>
-                  <img
-                    src={item.web_services_image}
-                    alt={item.web_services_image}
-                    className="size-14 object-cover rounded-full "
-                  />
-                </td>
-                <td>{item.web_services_name}</td>
-                <td>{item.web_services_description}</td>
-
-                <td>
-                  {/* TABLE STEP 9 */}
                   <div className="flex items-center justify-start gap-x-3 mr-10">
                     <button
                       type="button"
                       data-tooltip="Edit"
                       className="tooltip "
-                      //UPDATE STEP 3
-                      onClick={() => handleEdit(item)}
+
+                      //   onClick={() => handleEdit(item)}
                     >
                       <FaPencil className="size-4 " />
                     </button>
-                    {/* DELETE STEP 3 -> ModalDeleteServices.jsx */}
                     <button
                       type="button"
                       data-tooltip="Delete"
                       className="tooltip"
-                      //UPDATE STEP 3
-                      onClick={() => handleDelete(item)}
+                      //   onClick={() => handleDelete(item)}
                     >
                       <FaTrash className="size-4 " />
                     </button>
@@ -72,4 +55,4 @@ const ServicesTable = ({
   );
 };
 
-export default ServicesTable;
+export default ContactTable;

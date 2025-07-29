@@ -19,8 +19,9 @@ const TestimonialsTable = ({
       <table>
         <thead>
           <th>#</th>
+          <th>Image</th>
           <th>Name</th>
-          <th>Description</th>
+          <th>Position</th>
           <th>Comment</th>
           <th>Action</th>
         </thead>
@@ -30,12 +31,19 @@ const TestimonialsTable = ({
             return (
               <tr>
                 <td>{index + 1}.</td>
+                <td>
+                  <img
+                    src={item.testimonials_image}
+                    alt={item.testimonials_name}
+                    className="size-14 object-cover rounded-full "
+                  />
+                </td>
                 <td>{item.testimonials_name}</td>
                 <td>{item.testimonials_position}</td>
                 <td>{item.testimonials_comment}</td>
                 <td>
                   {/* TABLE STEP 9 */}
-                  <div className="flex items-center justify-end gap-x-3 mr-10">
+                  <div className="flex items-center justify-start gap-x-3 mr-10">
                     <button
                       type="button"
                       data-tooltip="Edit"

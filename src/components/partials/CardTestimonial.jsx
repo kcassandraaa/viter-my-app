@@ -3,8 +3,11 @@ import React from "react";
 const CardTestimonial = ({ item }) => {
   return (
     <>
-      <div id={item.testimonials_aid} className="w-full flex shrink-0 px-4">
-        <div className="bg-white p-8 rounded-xl shadow-md text-center">
+      <div
+        id={item.testimonials_aid}
+        className=" testimonials w-full flex shrink-0 px-4"
+      >
+        <div className="bg-white p-8 rounded-xl shadow-md text-center w-full">
           <img
             src={item.testimonials_image}
             alt={item.testimonials_name}
