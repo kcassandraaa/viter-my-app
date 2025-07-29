@@ -1,16 +1,21 @@
 import React from "react";
-import ModalAddContact from "./ModalAddContact";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { queryData } from "../../../../custom-hooks/queryData";
 import { apiVersion } from "../../../../helpers/function-general";
-import { InputText, InputTextArea } from "../../../../helpers/FormInputs";
 import useQueryData from "../../../../custom-hooks/useQueryData";
 import { FaList, FaTable } from "react-icons/fa";
+import ContactTable from "./ContactTable";
+import ContactList from "./ContactList";
+import ModalEditContact from "./ModalEditContact";
+import ModalDeleteContact from "./ModalDeleteContact";
 
 const Contact = () => {
+  const [isModalContact, setIsModalContact] = React.useState(false);
+  const [itemEdit, setItemEdit] = React.useState();
   const [isTable, setIsTable] = React.useState(false);
+  const [isDeleteContact, setIsDeleteContact] = React.useState(false);
 
   const {
     isLoading,
@@ -22,6 +27,17 @@ const Contact = () => {
     "get",
     "contact" // query key
   );
+
+  const handleEdit = (item) => {
+    // console.log(item); to show the info of the chosen item
+    setItemEdit(item);
+    setIsModalContact(true);
+  };
+
+  const handleDelete = (item) => {
+    setItemEdit(item);
+    setIsDeleteContact(true);
+  };
 
   console.log(isTable);
   const handleToggleTable = () => {
@@ -199,34 +215,27 @@ const Contact = () => {
                         </>
                       )}
                     </button>
-
-                    <div className="relative">
-                      <InputText
-                        label="Full Name"
-                        type="text"
-                        name="contact_fullname"
+                    {isTable == true ? (
+                      <>
+                        <ContactTable
+                          isLoading={isLoading}
+                          isFetching={isFetching}
+                          error={error}
+                          dataContact={dataContact}
+                          handleEdit={handleEdit}
+                          handleDelete={handleDelete}
+                        />
+                      </>
+                    ) : (
+                      <ContactList
+                        isLoading={isLoading}
+                        isFetching={isFetching}
+                        error={error}
+                        dataContact={dataContact}
+                        handleEdit={handleEdit}
+                        handleDelete={handleDelete}
                       />
-                    </div>
-                    <div className="relative">
-                      <InputText
-                        label="Email Address"
-                        type="text"
-                        name="contact_email"
-                      />
-                    </div>
-                    <div className="relative">
-                      <InputTextArea
-                        label="Message"
-                        as="textarea"
-                        rows="4"
-                        name="contact_message"
-                        className="inline-block"
-                      />
-                    </div>
-                    {/* CREATE STEP 2 */}
-                    <button className="btn btn--blue" type="submit">
-                      Send Message
-                    </button>
+                    )}
                   </Form>
                 );
               }}
@@ -234,6 +243,17 @@ const Contact = () => {
           </div>
         </div>
       </section>
+      {isModalContact && (
+        <ModalEditContact setIsModal={setIsModalContact} itemEdit={itemEdit} />
+      )}
+
+      {isDeleteContact && (
+        <ModalDeleteContact
+          setModalDelete={setIsDeleteContact}
+          mySqlEndpoint={`${apiVersion}/controllers/developer/contact/contact.php?id=${itemEdit.contact_aid}`}
+          queryKey="contact"
+        />
+      )}
     </>
   );
 };

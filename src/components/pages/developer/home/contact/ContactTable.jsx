@@ -18,6 +18,7 @@ const ContactTable = ({
         <thead>
           <th>#</th>
           <th>Full Name</th>
+          <th>Actions</th>
         </thead>
         <tbody>
           {dataContact?.data.map((item, index) => {
@@ -31,8 +32,7 @@ const ContactTable = ({
                       type="button"
                       data-tooltip="Edit"
                       className="tooltip "
-
-                      //   onClick={() => handleEdit(item)}
+                      onClick={() => handleEdit(item)}
                     >
                       <FaPencil className="size-4 " />
                     </button>
@@ -40,7 +40,7 @@ const ContactTable = ({
                       type="button"
                       data-tooltip="Delete"
                       className="tooltip"
-                      //   onClick={() => handleDelete(item)}
+                      onClick={() => handleDelete(item)}
                     >
                       <FaTrash className="size-4 " />
                     </button>
