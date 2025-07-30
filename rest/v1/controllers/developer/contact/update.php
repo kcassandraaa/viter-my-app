@@ -16,6 +16,10 @@ if (array_key_exists('id', $_GET)) {
     $contact->contact_message = checkIndex($data, 'contact_message');
     $contact->contact_updated = date("Y-m-d H:i:s");
 
+    $contact_email_old = $data['contact_email_old'];
+
+    compareEmail($contact, $contact_email_old, $contact->contact_email);
+
     $query = checkUpdate($contact);
     returnSuccess($contact, 'contact update', $query);
 }

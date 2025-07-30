@@ -18,18 +18,20 @@ const TestimonialsTable = ({
       {/* TABLE STEP 8 */}
       <table>
         <thead>
-          <th>#</th>
-          <th>Image</th>
-          <th>Name</th>
-          <th>Position</th>
-          <th>Comment</th>
-          <th>Action</th>
+          <tr>
+            <th>#</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Comment</th>
+            <th>Action</th>
+          </tr>
         </thead>
         <tbody>
           {/* TABLE STEP 10 */}
           {dataTestimonials?.data.map((item, index) => {
             return (
-              <tr>
+              <tr key={item.testimonials_aid}>
                 <td>{index + 1}.</td>
                 <td>
                   <img

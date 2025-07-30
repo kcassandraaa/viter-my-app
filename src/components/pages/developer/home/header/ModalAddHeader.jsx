@@ -18,7 +18,7 @@ const ModalAddHeader = ({ setIsModal, itemEdit }) => {
       queryData(
         itemEdit
           ? `${apiVersion}/controllers/developer/header/header.php?id=${itemEdit.header_aid}` //to pass id
-          : `${apiVersion}/controllers/developer/header/header.php`, 
+          : `${apiVersion}/controllers/developer/header/header.php`,
         itemEdit
           ? "put" // UPDATE
           : "post", //CREATE
@@ -31,7 +31,6 @@ const ModalAddHeader = ({ setIsModal, itemEdit }) => {
         alert(data.error);
       } else {
         alert(`Successfully created.`);
-        
       }
     },
   });
@@ -39,6 +38,8 @@ const ModalAddHeader = ({ setIsModal, itemEdit }) => {
   const initVal = {
     header_name: itemEdit ? itemEdit.header_name : "",
     header_link: itemEdit ? itemEdit.header_link : "",
+
+    header_name_old: itemEdit ? itemEdit.header_name : "",
   };
   const yupSchema = Yup.object({
     header_name: Yup.string().required("required"),

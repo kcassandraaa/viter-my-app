@@ -22,6 +22,11 @@ if (array_key_exists('id', $_GET)) {
     $webServices->web_services_text_url = $data['web_services_text_url'];
     $webServices->web_services_updated = date("Y-m-d H:i:s");
 
+    //VALIDATION STEP 6 -> ModalAddServices.jsx
+    $web_services_name_old = $data['web_services_name_old'];
+
+    compareName($webServices, $web_services_name_old, $webServices->web_services_name);
+
     //returnError($webServices->web_services_aid); - to check in network preview if the id is passed
 
     // UPDATE STEP 19 -> functions.php

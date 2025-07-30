@@ -22,11 +22,9 @@ const ModalEditContact = ({ setIsModal, itemEdit }) => {
   const mutation = useMutation({
     mutationFn: (values) =>
       queryData(
-        //UPDATE STEP 12 - update existing service or add new one
         itemEdit
           ? `${apiVersion}/controllers/developer/contact/contact.php?id=${itemEdit.contact_aid}` //to pass id
           : `${apiVersion}/controllers/developer/contact/contact.php`,
-        //UPDATE STEP 13 - add condition for update -> contact.php
         itemEdit
           ? "put" // UPDATE
           : "post", //CREATE
@@ -39,7 +37,7 @@ const ModalEditContact = ({ setIsModal, itemEdit }) => {
       if (!data.success) {
         alert(data.error);
       } else {
-        alert(`Successfully created.`);
+        alert(`Successfully edited.`);
         setIsModal(false);
       }
     },
@@ -57,6 +55,7 @@ const ModalEditContact = ({ setIsModal, itemEdit }) => {
     contact_fullname: itemEdit ? itemEdit.contact_fullname : "",
     contact_email: itemEdit ? itemEdit.contact_email : "",
     contact_message: itemEdit ? itemEdit.contact_message : "",
+    contact_email_old: itemEdit ? itemEdit.contact_email : "",
   };
   const yupSchema = Yup.object({
     contact_fullname: Yup.string().required("required"),

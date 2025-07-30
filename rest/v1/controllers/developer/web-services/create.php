@@ -22,5 +22,8 @@ $webServices->web_services_text_url = $data["web_services_text_url"];
 $webServices->web_services_created = date("Y-m-d H:i:s"); // 2025-07-23 08:16:23
 $webServices->web_services_updated = date("Y-m-d H:i:s");
 
+// VALIDATION STEP 1 -> core functions.php
+isEmailExist($webServices, $webServices->web_services_name);
+
 $query = checkCreate($webServices);
 returnSuccess($webServices, 'web services create', $query);

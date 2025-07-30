@@ -190,9 +190,9 @@ const Contact = () => {
             <Formik
               initialValues={initVal}
               validationSchema={yupSchema}
-              onSubmit={async (values, { resetForm }) => {
+              onSubmit={async (values, { setSubmitting, resetForm }) => {
                 console.log;
-                await mutation.mutateAsync(values);
+                mutation.mutate(values);
                 resetForm();
               }}
             >
@@ -243,6 +243,7 @@ const Contact = () => {
           </div>
         </div>
       </section>
+
       {isModalContact && (
         <ModalEditContact setIsModal={setIsModalContact} itemEdit={itemEdit} />
       )}

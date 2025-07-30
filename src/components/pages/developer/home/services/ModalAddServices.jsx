@@ -34,7 +34,7 @@ const ModalAddServices = ({ setIsModal, itemEdit }) => {
       if (!data.success) {
         alert(data.error);
       } else {
-        alert(`Successfully created.`);
+        alert(itemEdit ? `Successfully edited.` : `Successfully created.`);
         setIsModal(false);
       }
     },
@@ -55,6 +55,9 @@ const ModalAddServices = ({ setIsModal, itemEdit }) => {
     web_services_image: itemEdit ? itemEdit.web_services_image : "",
     web_services_link: itemEdit ? itemEdit.web_services_link : "",
     web_services_text_url: itemEdit ? itemEdit.web_services_text_url : "",
+
+    //VALIDATION STEP 7
+    web_services_name_old: itemEdit ? itemEdit.web_services_name : "",
   };
 
   const yupSchema = Yup.object({
@@ -92,14 +95,6 @@ const ModalAddServices = ({ setIsModal, itemEdit }) => {
             return (
               <Form>
                 <div className="modal-overflow">
-                  <div className="relative mt-3 mb-5">
-                    <InputText
-                      label="Image url"
-                      name="web_services_image"
-                      type="text"
-                      disabled={mutation.isPending}
-                    />
-                  </div>
                   <div className="relative mt-3">
                     <InputText
                       label="Name"
@@ -112,6 +107,14 @@ const ModalAddServices = ({ setIsModal, itemEdit }) => {
                     <InputTextArea
                       label="Description"
                       name="web_services_description"
+                      type="text"
+                      disabled={mutation.isPending}
+                    />
+                  </div>
+                  <div className="relative mt-3 mb-5">
+                    <InputText
+                      label="Image url"
+                      name="web_services_image"
                       type="text"
                       disabled={mutation.isPending}
                     />

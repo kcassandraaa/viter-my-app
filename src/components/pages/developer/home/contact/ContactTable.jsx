@@ -16,16 +16,22 @@ const ContactTable = ({
       {/* TABLE STEP 8 */}
       <table>
         <thead>
-          <th>#</th>
-          <th>Full Name</th>
-          <th>Actions</th>
+          <tr>
+            <th>#</th>
+            <th>Full Name</th>
+            <th>Email Address</th>
+            <th>Message</th>
+            <th>Actions</th>
+          </tr>
         </thead>
         <tbody>
           {dataContact?.data.map((item, index) => {
             return (
-              <tr>
+              <tr key={item.contact_aid}>
                 <td>{index + 1}.</td>
                 <td>{item.contact_fullname}</td>
+                <td>{item.contact_email}</td>
+                <td>{item.contact_message}</td>
                 <td>
                   <div className="flex items-center justify-start gap-x-3 mr-10">
                     <button
