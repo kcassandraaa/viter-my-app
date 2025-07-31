@@ -75,6 +75,7 @@ const ModalAddHeader = ({ setIsModal, itemEdit }) => {
           validationSchema={yupSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             console.log(values);
+            resetForm();
 
             mutation.mutate(values);
           }}
